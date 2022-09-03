@@ -5,18 +5,42 @@ import {
   InputLabel,
   Select,
   TextField,
+  Button,
+  createTheme,
+  ThemeProvider,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 
 export function App() {
+  const theme = createTheme({
+    palette: {
+      vermelho: {
+        main: '#ff0000da',
+        contrastText: '#fff',
+      },
+    },
+  })
   const [sexo, setSexo] = useState()
-  const[atividadeFisica, setAtividadeFisica] = useState()
+  const [atividadeFisica, setAtividadeFisica] = useState()
+  const [idade, setIdade] = useState()
+  const [peso, setPeso] = useState()
+  const [altura, setAltura] = useState()
   const inputSexo = (e) => {
     setSexo(e.target.value)
   }
-  const inputAtividadeFisica =(e) => {
+  const inputAtividadeFisica = (e) => {
     setAtividadeFisica(e.target.value)
   }
+  const inputIdade = (e) => {
+    setIdade(e.target.value)
+  }
+  const inputAltura = (e) => {
+    setAltura(e.target.value)
+  }
+  const inputPeso = (e) => {
+    setPeso(e.target.value)
+  }
+  const calcular = () => {}
   return (
     <div className='container'>
       <header className='header'>
@@ -42,7 +66,7 @@ export function App() {
         <span>Calculadora de Calorias</span>
       </header>
       <section className='inputs'>
-        <FormControl fullWidth margin="dense" >
+        <FormControl fullWidth margin='dense'>
           <InputLabel id='inputSexo'>Sexo</InputLabel>
           <Select
             labelId='inputSexo'
@@ -55,19 +79,53 @@ export function App() {
             <MenuItem value={'mulher'}>Mulher</MenuItem>
           </Select>
         </FormControl>
-        <TextField id='idade' label='Idade' type='number' fullWidth margin="dense" size=''/>
-        <TextField id='peso' label='Peso' type='number' fullWidth margin="dense"/>
-        <TextField id='altura' label='Altura' type='number' fullWidth margin="dense"/>
-        <FormControl fullWidth margin="dense">
-          <InputLabel id='inputAtividadeFisica'>Nivel de Atividade Fisica</InputLabel>
-          <Select labelId='inputAtividadeFisica'
-          id='inputSelectAtividadeFisica'
-          value={atividadeFisica}
-          label="Atividade Fisica"
-          onChange={inputAtividadeFisica}
-          > 
-          <MenuItem value={'Sedentario'}>Sedentario</MenuItem></Select>
+        <TextField
+          id='idade'
+          label='Idade'
+          type='number'
+          fullWidth
+          margin='dense'
+          onchange={inputIdade}
+        />
+        <TextField
+          id='peso'
+          label='Peso'
+          type='number'
+          fullWidth
+          margin='dense'
+          onchange={inputPeso}
+        />
+        <TextField
+          id='altura'
+          label='Altura'
+          type='number'
+          fullWidth
+          margin='dense'
+          onchange={inputAltura}
+        />
+        <FormControl fullWidth margin='dense'>
+          <InputLabel id='inputAtividadeFisica'>
+            Nivel de Atividade Fisica
+          </InputLabel>
+          <Select
+            labelId='inputAtividadeFisica'
+            id='inputSelectAtividadeFisica'
+            value={atividadeFisica}
+            label='Atividade Fisica'
+            onChange={inputAtividadeFisica}
+          >
+            <MenuItem value={0}>Sedentario</MenuItem>
+            <MenuItem value={1}>Pouca atividade</MenuItem>
+            <MenuItem value={2}>Atividade moderada</MenuItem>
+            <MenuItem value={3}>Atividade intensa</MenuItem>
+            <MenuItem value={4}>Atividade muito intensa</MenuItem>
+          </Select>
         </FormControl>
+        <ThemeProvider theme={theme}>
+          <Button color='vermelho' variant='contained' onClick={calcular}>
+            Calcular
+          </Button>
+        </ThemeProvider>
       </section>
     </div>
   )
